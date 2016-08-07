@@ -22,8 +22,7 @@ void delay(uint16_t delay);
 
 int main(void) {
 
-	__GPIOD_CLK_ENABLE()
-	;
+	__GPIOD_CLK_ENABLE();
 
 	GPIO_InitTypeDef GPIO_Init;
 
