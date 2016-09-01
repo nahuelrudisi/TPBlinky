@@ -1,91 +1,115 @@
-/**
- ******************************************************************************
- * @file    main.c
- * @author  Ac6
- * @version V1.0
- * @date    01-December-2013
- * @brief   Default main function.
- ******************************************************************************
- */
+#include "bsp/bsp.h"
 
-#include "stm32f4xx.h"
-#include "stm32f4_discovery.h"
+void APP_1ms(void);
 
-void delay(uint16_t delay);
-
-#define LED_NARANJA GPIO_PIN_13
-#define LED_VERDE GPIO_PIN_12
-#define LED_ROJO GPIO_PIN_14
-#define LED_AZUL GPIO_PIN_15
-
-#define LEDS_PORT GPIOD
+uint8_t brightness = 0;		// Brillo
+uint16_t counter = 0;
+uint8_t color = 1;
+uint8_t cambio = 0;
 
 int main(void) {
 
-	__GPIOD_CLK_ENABLE();
+	BSP_Init();
 
-	GPIO_InitTypeDef GPIO_Init;
+//	led_setBright(RGB_RED, 100);
+//	led_setBright(RGB_GREEN, 0);
+//	led_setBright(RGB_BLUE, 0);
 
-	GPIO_Init.Mode = GPIO_MODE_OUTPUT_PP;
-	GPIO_Init.Pull = GPIO_NOPULL;
-	GPIO_Init.Speed = GPIO_SPEED_FAST;
+	BSP_Apagar(RGB_RED);
+	BSP_Apagar(RGB_GREEN);
+	BSP_Encender(RGB_BLUE);
 
-	GPIO_Init.Pin = LED_AZUL | LED_ROJO | LED_NARANJA | LED_VERDE;
-	HAL_GPIO_Init(LEDS_PORT, &GPIO_Init);
+	while (1)
+	{
 
-	while (1) {
+/*		if(cambio == 1)
+		{
+			cambio = 2;
+			if(Get_SW_State() == 0)	// Lee Boton
+			{
+				if (brightness < 50)
+				{
+					brightness ++;
+				}
+				else
+				{
+					color++;
+					brightness = 0;
+				}
+			}
+			else
+			{
+				if (brightness > 0)
+					brightness --;
+				else
+				{
+					color--;
+					brightness = 50;
+				}
+			}
+		}
 
-		// Sentido Antihorario
-		HAL_GPIO_WritePin(LEDS_PORT, LED_AZUL, GPIO_PIN_SET);
-		HAL_GPIO_WritePin(LEDS_PORT, LED_ROJO, GPIO_PIN_RESET);
-		HAL_GPIO_WritePin(LEDS_PORT, LED_NARANJA, GPIO_PIN_RESET);
-		HAL_GPIO_WritePin(LEDS_PORT, LED_VERDE, GPIO_PIN_RESET);
-		delay(0xFFFF);
-		HAL_GPIO_WritePin(LEDS_PORT, LED_AZUL, GPIO_PIN_RESET);
-		HAL_GPIO_WritePin(LEDS_PORT, LED_ROJO, GPIO_PIN_SET);
-		HAL_GPIO_WritePin(LEDS_PORT, LED_NARANJA, GPIO_PIN_RESET);
-		HAL_GPIO_WritePin(LEDS_PORT, LED_VERDE, GPIO_PIN_RESET);
-		delay(0xFFFF);
-		HAL_GPIO_WritePin(LEDS_PORT, LED_AZUL, GPIO_PIN_RESET);
-		HAL_GPIO_WritePin(LEDS_PORT, LED_ROJO, GPIO_PIN_RESET);
-		HAL_GPIO_WritePin(LEDS_PORT, LED_NARANJA, GPIO_PIN_SET);
-		HAL_GPIO_WritePin(LEDS_PORT, LED_VERDE, GPIO_PIN_RESET);
-		delay(0xFFFF);
-		HAL_GPIO_WritePin(LEDS_PORT, LED_AZUL, GPIO_PIN_RESET);
-		HAL_GPIO_WritePin(LEDS_PORT, LED_ROJO, GPIO_PIN_RESET);
-		HAL_GPIO_WritePin(LEDS_PORT, LED_NARANJA, GPIO_PIN_RESET);
-		HAL_GPIO_WritePin(LEDS_PORT, LED_VERDE, GPIO_PIN_SET);
-		delay(0xFFFF);
-
-		// Sentido Horario
-		HAL_GPIO_WritePin(LEDS_PORT, LED_AZUL, GPIO_PIN_RESET);
-		HAL_GPIO_WritePin(LEDS_PORT, LED_ROJO, GPIO_PIN_RESET);
-		HAL_GPIO_WritePin(LEDS_PORT, LED_NARANJA, GPIO_PIN_SET);
-		HAL_GPIO_WritePin(LEDS_PORT, LED_VERDE, GPIO_PIN_RESET);
-		delay(0xFFFF);
-		HAL_GPIO_WritePin(LEDS_PORT, LED_AZUL, GPIO_PIN_RESET);
-		HAL_GPIO_WritePin(LEDS_PORT, LED_ROJO, GPIO_PIN_SET);
-		HAL_GPIO_WritePin(LEDS_PORT, LED_NARANJA, GPIO_PIN_RESET);
-		HAL_GPIO_WritePin(LEDS_PORT, LED_VERDE, GPIO_PIN_RESET);
-		delay(0xFFFF);
-		HAL_GPIO_WritePin(LEDS_PORT, LED_AZUL, GPIO_PIN_SET);
-		HAL_GPIO_WritePin(LEDS_PORT, LED_ROJO, GPIO_PIN_RESET);
-		HAL_GPIO_WritePin(LEDS_PORT, LED_NARANJA, GPIO_PIN_RESET);
-		HAL_GPIO_WritePin(LEDS_PORT, LED_VERDE, GPIO_PIN_RESET);
-		delay(0xFFFF);
-		HAL_GPIO_WritePin(LEDS_PORT, LED_AZUL, GPIO_PIN_RESET);
-		HAL_GPIO_WritePin(LEDS_PORT, LED_ROJO, GPIO_PIN_RESET);
-		HAL_GPIO_WritePin(LEDS_PORT, LED_NARANJA, GPIO_PIN_RESET);
-		HAL_GPIO_WritePin(LEDS_PORT, LED_VERDE, GPIO_PIN_SET);
-		delay(0xFFFF);
+		if(cambio == 2)
+		{
+			switch(color)
+			{
+				case 0:
+						color = 4;
+						led_setBright(RGB_RED, 50);
+						led_setBright(RGB_GREEN, 50);
+						led_setBright(RGB_BLUE, 50);
+				case 1:
+						led_setBright(RGB_RED, brightness);
+						break;
+				case 2:
+						led_setBright(RGB_GREEN, brightness);
+						break;
+				case 3:
+						led_setBright(RGB_BLUE, brightness);
+						break;
+				case 5:
+						color=1;
+						led_setBright(RGB_RED, 0);
+						led_setBright(RGB_GREEN, 0);
+						led_setBright(RGB_BLUE, 0);
+				default:
+						break;
+			}
+			cambio = 0;
+		}
 	}
+	*/
+}
 }
 
-void delay(uint16_t delay) {
-	uint16_t i = 0xFFFF;
-	while (i) {
-		while (delay)
-			delay--;
-		i--;
+void APP_1ms(void)
+{
+	if((counter == 10)&&(cambio == 0))
+	{
+		cambio  = 1;
+		counter = 0;
+	}
+	counter++;
+}
+
+
+/*
+int main(void)
+{
+	int bandera=0;
+	BSP_Init_RGB();
+	BSP_Init_ADC();
+
+	while (1)
+	{
+		if(bandera == 0)
+		{
+			bandera = 1;
+			BSP_Encender(RGB_GREEN);
+			BSP_Apagar(RGB_RED);
+			BSP_Apagar(RGB_BLUE);
+		}
 	}
 }
+*/
+
