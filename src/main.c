@@ -13,7 +13,7 @@
 int main(void)
 {
 	int i;
-	float adc[5],menor;
+	float adc[5],valor;
 	uint32_t potenciometro = 0;
 	uint32_t valor_ROJO = 0, valor_VERDE = 0, valor_AZUL = 0;
 	BSP_Init();
@@ -23,10 +23,13 @@ int main(void)
 		for(i=0;i<=5;i++)
 		{
 			adc[i] = BSP_GetBrightness();
-			if ((i == 0) || (adc[i] < menor))
-				menor = adc[i];						// Saco el menor para que no me afecte la variacion del ADC
+			if (((i == 0) || (adc[i] < valor)) && (adc[i] < 5000))
+				valor = adc[i];											// Saco el menor para que no me afecte la variacion del ADC
+			if (((i == 0) || (adc[i] > valor)) && (adc[i] >= 5000))
+				valor = adc[i];											// Saco el mayor para que no me afecte la variacion del ADC
 		}
-		potenciometro = (uint32_t) menor;
+
+		potenciometro = (uint32_t) valor;
 
 		if(potenciometro <= 1250)
 		{
