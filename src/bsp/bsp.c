@@ -140,7 +140,7 @@ void RGB_PWM(uint32_t led, uint32_t value) {
 
 float BSP_GetBrightness(void) {
 	HAL_ADC_Start(&ADC_HandleStruct);
-	return (HAL_ADC_GetValue(&ADC_HandleStruct) * (float)100 / (float)4095);
+	return (HAL_ADC_GetValue(&ADC_HandleStruct) * (float)2.442598925);	// 0 - 4095 con la multiplicación de 0 - 10000
 }
 
 void delay(uint16_t delay) {

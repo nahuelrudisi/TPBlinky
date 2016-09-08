@@ -1,17 +1,14 @@
 //	TABLA DE VERDAD Y SECUENCIA EN QUE ENCIENDEN LOS LEDS
 //		R		G		B
-//		0		0		0
-//		0		0		1
-//		0		1		1
-//		1		1		1
-//		1		1		0
 //		1		0		0
-//		1		0		1
+//		1		1		0
 //		0		1		0
+//		0		1		1
+//		0		0		1
+//		1		0		1
+//		1		0		0
 
 #include "bsp/bsp.h"
-
-#define multiplicador 1000000
 
 int main(void)
 {
@@ -29,56 +26,48 @@ int main(void)
 			if ((i == 0) || (adc[i] < menor))
 				menor = adc[i];						// Saco el menor para que no me afecte la variacion del ADC
 		}
-		menor = menor * multiplicador;
 		potenciometro = (uint32_t) menor;
 
-		if(potenciometro <= 14285714)
-		{
-			valor_ROJO  = 0;
-			valor_VERDE = 0;
-			valor_AZUL  = (uint32_t) (0.000007 * potenciometro);
-		}
-
-		if((potenciometro > 14285714) && (potenciometro <= 28571428))
-		{
-			valor_ROJO  = 0;
-			valor_VERDE = (uint32_t) (0.000007 * potenciometro - 100);
-			valor_AZUL  = 100;
-		}
-
-		if((potenciometro > 28571428) && (potenciometro <= 42857142))
-		{
-			valor_ROJO  = (uint32_t) (0.000007 * potenciometro - 200);
-			valor_VERDE = 100;
-			valor_AZUL  = 100;
-		}
-
-		if((potenciometro > 42857142) && (potenciometro <= 57142857))
+		if(potenciometro <= 1250)
 		{
 			valor_ROJO  = 100;
-			valor_VERDE = 100;
-			valor_AZUL  = (uint32_t) (-0.000007 * potenciometro + 400);
-		}
-
-		if((potenciometro > 57142857) && (potenciometro <= 71428571))
-		{
-			valor_ROJO  = 100;
-			valor_VERDE = (uint32_t) (-0.000007 * potenciometro + 500);
+			valor_VERDE = (uint32_t) (0.08 * potenciometro);
 			valor_AZUL  = 0;
 		}
 
-		if((potenciometro > 71428571) && (potenciometro <= 85714286))
+		if((potenciometro > 1250) && (potenciometro <= 2500))
+		{
+			valor_ROJO  = (uint32_t) (-0.08 * potenciometro + 200);
+			valor_VERDE = 100;
+			valor_AZUL  = 0;
+		}
+
+		if((potenciometro > 2500) && (potenciometro <= 4250))
+		{
+			valor_ROJO  = 0;
+			valor_VERDE = 100;
+			valor_AZUL  = (uint32_t) (0.05714 * potenciometro - 143);
+		}
+
+		if((potenciometro > 4250) && (potenciometro <= 6000))
+		{
+			valor_ROJO  = 0;
+			valor_VERDE = (uint32_t) (-0.05714 * potenciometro + 343);
+			valor_AZUL  = 100;
+		}
+
+		if((potenciometro > 6000) && (potenciometro <= 8000))
+		{
+			valor_ROJO  = (uint32_t) (0.05 * potenciometro - 300);
+			valor_VERDE = 0;
+			valor_AZUL  = 100;
+		}
+
+		if((potenciometro > 8000) && (potenciometro <= 10000))
 		{
 			valor_ROJO  = 100;
 			valor_VERDE = 0;
-			valor_AZUL  = (uint32_t) (0.000007 * potenciometro - 500);
-		}
-
-		if((potenciometro > 85714286) && (potenciometro <= 100000000))
-		{
-			valor_ROJO  = (uint32_t) (-0.000007 * potenciometro + 700);
-			valor_VERDE = (uint32_t) (0.000007 * potenciometro - 600);
-			valor_AZUL  = (uint32_t) (-0.000007 * potenciometro + 700);
+			valor_AZUL  = (uint32_t) (-0.05 * potenciometro + 500);
 		}
 
 		RGB_PWM(RGB_AZUL, valor_AZUL);
