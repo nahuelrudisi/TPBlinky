@@ -134,11 +134,20 @@ void BSP_Init(void){
 	ADC_Init();
 }
 
-void RGB_PWM(uint8_t led, uint8_t value) {
+void RGB_PWM(uint32_t led, uint32_t value) {
 	*leds_pwm[led] = 1000 * value / 100;
 }
 
 float BSP_GetBrightness(void) {
 	HAL_ADC_Start(&ADC_HandleStruct);
 	return (HAL_ADC_GetValue(&ADC_HandleStruct) * (float)100 / (float)4095);
+}
+
+void delay(uint16_t delay) {
+	uint16_t i = 0xFFFF;
+	while (i) {
+		while (delay)
+			delay--;
+		i--;
+}
 }

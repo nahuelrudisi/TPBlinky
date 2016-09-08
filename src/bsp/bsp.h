@@ -16,7 +16,8 @@ enum{
 
 
 void BSP_Init(void);
-void RGB_PWM(uint8_t led, uint8_t value);
+void RGB_PWM(uint32_t led, uint32_t value);
 float BSP_GetBrightness(void);
+void delay(uint16_t delay);
 
 #endif /* BSP_BSP_H_ */
